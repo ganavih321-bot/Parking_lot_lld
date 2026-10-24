@@ -14,3 +14,19 @@ public class PaymentStrategyFactory {
     }
 }
 """
+from enums.PaymentMode import PaymentMode
+from strategy.payment.CashPayment import CashPayment
+from strategy.payment.UpiPayment import UpiPayment
+from strategy.payment.CardPayment import CardPayment
+
+class PaymentStrategyFactory():
+    @staticmethod
+    def get(mode:PaymentMode):
+        if mode == PaymentMode.CASH:
+            return CashPayment()
+        elif mode == PaymentMode.UPI:
+            return UpiPayment()
+        elif mode == PaymentMode.CARD:
+            return CardPayment()
+        else:
+            raise ValueError("Invalid payment mode")

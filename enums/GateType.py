@@ -9,7 +9,7 @@ public enum GateType {
 
 from enum import Enum
 
-class GateType:
-    ENTRY="entry"
-    EXIT="exit"
+class GateType(Enum):
+    ENTRY="ENTRY"
+    EXIT="EXIT"
 
