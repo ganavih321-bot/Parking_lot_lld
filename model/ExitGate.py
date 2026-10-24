@@ -23,3 +23,21 @@ public class ExitGate extends Gate {
     }
 }
 """
+
+from datetime import datetime
+from .Gate import Gate
+from ..enums.GateType import GateType
+from ..enums.PaymentMode import PaymentMode
+from typing import Optional
+
+
+class ExitGate(Gate):
+    def __init__(self, id: str):
+        super().__init__(id)
+
+    def getType(self) -> GateType:
+        return GateType.EXIT
+
+    def unparkVehicle(self, ticketId: str, exitTime: datetime, paymentMode: PaymentMode) -> Optional[Ticket]:
+        from ..service.ParkingLot import ParkingLot
+        return ParkingLot.getInstance().unparkVehicle(ticketId, exitTime, paymentMode)

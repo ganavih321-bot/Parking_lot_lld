@@ -7,3 +7,8 @@ public interface PaymentStrategy {
     boolean processPayment(Ticket ticket, double amount);
 }
 """
+from abc import ABC
+class PaymentStrategy(ABC):
+    @abstractmethod
+    def processPayment(self, ticket: Ticket, amount: float) -> bool:
+        pass

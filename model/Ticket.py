@@ -18,3 +18,12 @@ public class Ticket {
     private PaymentStatus paymentStatus = PaymentStatus.PENDING;
 }
 """
+
+class Ticket:
+    def __init__(self, ticketId, entryTime, vehicle, floorId, spotId, paymentStatus):
+        self.ticketId = ticketId
+        self.entryTime = entryTime
+        self.vehicle = vehicle
+        self.floorId = floorId
+        self.spotId = spotId
+        self.paymentStatus = paymentStatus
