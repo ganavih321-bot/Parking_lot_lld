@@ -8,7 +8,7 @@ public class Bike extends Vehicle {
 }
 """
 
-from .Vehicle import Vehicle
+from model.Vehicle import Vehicle
 from enums.VehicleType import VehicleType
 
 class Bike(Vehicle):

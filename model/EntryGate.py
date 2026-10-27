@@ -25,10 +25,10 @@ public class EntryGate extends Gate {
 
 from datetime import datetime
 from typing import Optional
-from .Gate import Gate
-from ..enums.GateType import GateType
-from .Vehicle import Vehicle
-from .Ticket import Ticket
+from model.Gate import Gate
+from enums.GateType import GateType
+from model.Vehicle import Vehicle
+from model.Ticket import Ticket
 
 
 class EntryGate(Gate):
@@ -39,5 +39,5 @@ class EntryGate(Gate):
         return GateType.ENTRY
 
     def parkVehicle(self, vehicle: Vehicle, entryTime: datetime) -> Optional[Ticket]:
-        from ..service.ParkingLot import ParkingLot
+        from service.ParkingLot import ParkingLot
         return ParkingLot.getInstance().parkVehicle(vehicle, entryTime)

@@ -36,3 +36,34 @@ public class ParkingSpot {
     }
 }
 """
+import threading
+from enums.VehicleType import VehicleType
+
+
+class ParkingSpot:
+    def __init__(self, id: str, allowedType: VehicleType):
+        self.id = id
+        self.allowedType = allowedType
+        self.occupied = False
+        self._lock = threading.Lock()
+
+    def getId(self) -> str:
+        return self.id
+
+    def getAllowedType(self) -> VehicleType:
+        return self.allowedType
+
+    def tryOccupy(self) -> bool:
+        with self._lock:
+            if not self.occupied:
+                self.occupied = True
+                return True
+            return False
+
+    def vacate(self):
+        with self._lock:
+            self.occupied = False
+
+    def isOccupied(self) -> bool:
+        with self._lock:
+            return self.occupied

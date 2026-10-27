@@ -61,4 +61,71 @@ public class Main {
 /*
 
  */
- """
+"""
+
+import threading
+from datetime import datetime
+
+from enums.PaymentMode import PaymentMode
+from enums.PricingStrategyType import PricingStrategyType
+from enums.VehicleType import VehicleType
+from factory.PricingStrategyFactory import PricingStrategyFactory
+from factory.VehicleFactory import VehicleFactory
+from model.EntryGate import EntryGate
+from model.ExitGate import ExitGate
+from model.ParkingFloor import ParkingFloor
+from model.ParkingSpot import ParkingSpot
+from model.Ticket import Ticket
+from model.Vehicle import Vehicle
+from service.ParkingLot import ParkingLot
+from utils.DateTimeParser import DateTimeParser
+
+
+class Main:
+    @staticmethod
+    def main():
+        lot = ParkingLot.getInstance()
+        entryGate = EntryGate("EG1")
+        exitGate = ExitGate("XG1")
+
+        lot.setPricingStrategy(PricingStrategyFactory.get(PricingStrategyType["EVENT_BASED"]))
+
+        floor1 = ParkingFloor("Floor1")
+        floor1.addSpot(ParkingSpot("F1S1", VehicleType.BIKE))
+        floor1.addSpot(ParkingSpot("F1S2", VehicleType.CAR))
+        floor1.addSpot(ParkingSpot("F1S3", VehicleType.TRUCK))
+        floor1.addSpot(ParkingSpot("F1S4", VehicleType.CAR))
+        lot.addFloor(floor1)
+
+        print("--------------------------")
+
+        bike1 = VehicleFactory.create("KA01AB1234", VehicleType.BIKE)
+        bike2 = VehicleFactory.create("KA01AB5678", VehicleType.BIKE)
+        entryTime = DateTimeParser.parse("21 May 7:30 AM 2025")
+        print(entryTime.replace(minute=0, second=0, microsecond=0))
+
+        thread1 = threading.Thread(target=entryGate.parkVehicle, args=(bike1, entryTime))
+        thread2 = threading.Thread(target=entryGate.parkVehicle, args=(bike2, entryTime))
+
+        thread1.start()
+        thread2.start()
+
+        thread1.join()
+        thread2.join()
+
+        # Demo for car parking, unparking, and status as present in Java commented code:
+        # car = VehicleFactory.create("KA01AB1234", VehicleType.CAR)
+        # ticket = entryGate.parkVehicle(car, entryTime)
+        # print("--------------------------")
+        # lot.printStatus()
+        # print("--------------------------")
+        # exitTime = DateTimeParser.parse("21 May 1:15 PM 2025")
+        # if ticket:
+        #     exitGate.unparkVehicle(ticket.getTicketId(), exitTime, PaymentMode.UPI)
+        # print("--------------------------")
+        # lot.printStatus()
+
+
+if __name__ == "__main__":
+    Main.main()
+

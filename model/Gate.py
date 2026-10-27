@@ -42,7 +42,7 @@ public abstract class Gate {
 
 
 from abc import ABC, abstractmethod
-from ..enums.GateType import GateType
+from enums.GateType import GateType
 
 
 class Gate(ABC):

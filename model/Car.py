@@ -7,7 +7,7 @@ public class Car extends Vehicle {
     public Car(String number) { super(number, VehicleType.CAR); }
 }
 """
-from .Vehicle import Vehicle
+from model.Vehicle import Vehicle
 from enums.VehicleType import VehicleType
 
 class Car(Vehicle):

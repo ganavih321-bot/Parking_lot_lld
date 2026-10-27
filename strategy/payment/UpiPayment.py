@@ -11,10 +11,13 @@ public class UpiPayment implements PaymentStrategy {
     }
 }
 """
-from .PaymentStrategy import PaymentStrategy
-from ...model.Ticket import Ticket
+from model.Ticket import Ticket
+from strategy.payment.PaymentStrategy import PaymentStrategy
 
 class UpiPayment(PaymentStrategy):
     def processPayment(self, ticket: Ticket, amount: float) -> bool:
-        print(f"Paid ₹{amount} for ticket {ticket.getTicketId()} via UPI.")
+        try:
+            print(f"Paid ₹{amount} for ticket {ticket.getTicketId()} via UPI.")
+        except UnicodeEncodeError:
+            print(f"Paid Rs. {amount} for ticket {ticket.getTicketId()} via UPI.")
         return True

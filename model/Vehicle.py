@@ -13,7 +13,7 @@ public abstract class Vehicle {
 }
 """
 from abc import ABC
-from ..enums.VehicleType import VehicleType
+from enums.VehicleType import VehicleType
 
 
 class Vehicle(ABC):

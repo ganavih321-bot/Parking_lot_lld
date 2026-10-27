@@ -12,3 +12,19 @@ public class DateTimeParser {
     }
 }
 """
+
+
+from datetime import datetime
+
+
+class DateTimeParser:
+    @staticmethod
+    def parse(input: str) -> datetime:
+        # Expected format example: "21 May 7:30 AM 2025"
+        for fmt in ("%d %b %I:%M %p %Y", "%d %B %I:%M %p %Y", "%Y-%m-%d %H:%M:%S"):
+            try:
+                return datetime.strptime(input.strip(), fmt)
+            except ValueError:
+                continue
+        raise ValueError(f"Unable to parse date time string: '{input}'")
+

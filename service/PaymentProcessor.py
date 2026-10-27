@@ -24,3 +24,21 @@ public class PaymentProcessor {
     }
 }
 """
+
+from enums.PaymentStatus import PaymentStatus
+from model.Ticket import Ticket
+from strategy.payment.PaymentStrategy import PaymentStrategy
+
+
+class PaymentProcessor:
+    def __init__(self, strategy: PaymentStrategy):
+        self.strategy = strategy
+
+    def pay(self, ticket: Ticket, amount: float) -> bool:
+        success = self.strategy.processPayment(ticket, amount)
+        if success:
+            ticket.setPaymentStatus(PaymentStatus.SUCCESS)
+        else:
+            ticket.setPaymentStatus(PaymentStatus.FAILED)
+            print(f"Payment failed for ticket: {ticket.getTicketId()}")
+        return success

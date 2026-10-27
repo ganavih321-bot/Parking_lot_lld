@@ -15,13 +15,15 @@ public class PaymentStrategyFactory {
 }
 """
 from enums.PaymentMode import PaymentMode
+from strategy.payment.PaymentStrategy import PaymentStrategy
 from strategy.payment.CashPayment import CashPayment
 from strategy.payment.UpiPayment import UpiPayment
 from strategy.payment.CardPayment import CardPayment
 
-class PaymentStrategyFactory():
+
+class PaymentStrategyFactory:
     @staticmethod
-    def get(mode:PaymentMode):
+    def get(mode: PaymentMode) -> PaymentStrategy:
         if mode == PaymentMode.CASH:
             return CashPayment()
         elif mode == PaymentMode.UPI:
